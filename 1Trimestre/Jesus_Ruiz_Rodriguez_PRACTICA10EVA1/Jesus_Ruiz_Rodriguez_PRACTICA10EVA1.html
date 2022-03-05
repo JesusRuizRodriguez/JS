@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /*Se le da el formato de 50x50px*/
+        div {
+        position: fixed;
+        height: 50px;
+        width: 50px;
+            
+        }
+    </style>
+
+
+
+</head>
+<body>
+    <script>
+        //un bucle de 2000 iteraciones para los 2000 cuadrados
+        for(let i=0; i<2000;i++){
+            
+            //se generan las posiciones de forma aleatoria
+            let l = (Math.random()* 100);
+            let t = (Math.random()* 100);
+            
+            //se generan los colores de forma aleatoria
+            let r = (Math.random() * 255);
+            let g = (Math.random() * 255);
+            let b = (Math.random() * 255);
+            
+            //se asignan las posiciones aleatorias en pantalla y los colores a cada uno de los 2000 divs que se obtendran en el bucle
+            document.write(`<div style='background-color:rgb(${r},${g},${b}); left:${l}%; top:${t}%;'></div>`);
+        }
+        
+
+        
+    </script>
+</body>
+</html>

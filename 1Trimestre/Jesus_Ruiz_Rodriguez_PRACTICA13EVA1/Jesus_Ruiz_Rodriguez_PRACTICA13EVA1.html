@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var acierto =false;
+        var texto;
+        var unicode =[]; 
+        let posicion =64;
+
+        while(acierto == false){
+            var txtdato = prompt("Introduzca un numero entre el 1 y el 100");
+            var dato = parseInt(txtdato);
+
+            if(txtdato == null){
+            acierto = true;
+            document.write("Fin");
+
+            }else if(isNaN(dato) || dato < 1 || dato >100){
+               alert("Ajustese al formato");
+                
+
+            }else{
+                acierto = true;
+            }
+        }
+
+        while(texto !== ""){
+            var txt = prompt("Introduzca una clave a cifrar");
+            
+            for(let i =0;i<txt.length;i++){
+                letras =txt.charCodeAt(i);
+                
+                letras = letras + dato;
+                
+                letras = String.fromCharCode(letras);
+
+                document.write(letras);
+                
+            }
+                
+
+            if(txt !== ""){
+                texto = "";
+            }else{
+                alert("Introduzca una clave");
+            
+            }
+        }
+
+        
+          
+        
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>

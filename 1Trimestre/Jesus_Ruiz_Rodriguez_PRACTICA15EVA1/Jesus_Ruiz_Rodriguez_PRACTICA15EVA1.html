@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 15</title>
+</head>
+<body>
+    <script>
+        //creacion de variables
+        var permiso = true;
+        var txtCifrado = [];
+        var cifrar = [];
+        var digit = [];
+        var contador =0;
+        
+        //bucle para hacer las comprobaciones de introduccion de datos
+        do{
+            var pass = prompt("Introduzca una clave");
+            var texto = prompt("Introduzca el texto a cifrar");
+            
+            //si la clave o el texto se cancelan se mostrara este mensaje
+            if(pass == null || texto == null){
+                document.write("Cancelando Ejecucion...");
+                break;
+            }
+            //si la clave es menor al rango o no es un numero, se pedirá de nuevo
+            if(pass <1 || pass >99999 || isNaN(pass)){
+                permiso = false;
+                document.write("Introduzca un numero entre 1 y 1000000 <br>");
+            }
+            //si el texto esta vacio se pedirá de nuevo
+            if(texto == ""){
+                permiso = false;
+                document.write("No se admite un texto vacio <br>");
+            }
+
+           //en caso de que permiso sea falso se volverá a repetir el proceso
+        }while(permiso == false)
+        
+        //se guardan en un array los valores Unicode de cada letra del texto
+        for(let i =0; i < texto.length;i++){
+            
+            txtCifrado[i] = texto.charCodeAt(i);
+        }
+        //se guarda la clave en un array y se transforma a numero, para evitar fallos
+        for(let x=0;x< pass.length;x++){
+            
+            digit[x] = parseInt(pass.charAt(x));
+
+        }
+
+        //bucle para sumar a valor Unicode la clave
+        for(let z = 0; z<texto.length; z++){
+            //en caso de que se llegue al final de la clave, que se empiece de nuevo
+            if(contador >= digit.length){
+                contador=0;
+            }
+            
+            //se suma la clave al valor unicode y se guarda en la misma posicion
+            txtCifrado[z] += digit[contador];
+            //en un array auxiliar se transforma de Unicode a texto de nuevo 
+            cifrar[z] = String.fromCharCode(txtCifrado[z]);
+            
+            contador++;
+                            
+        }
+        //se imprime por pantalla y por terminal el resultado
+        document.write(cifrar.join(""));
+        console.log(cifrar.join(""));
+        
+    </script>
+</body>
+</html>

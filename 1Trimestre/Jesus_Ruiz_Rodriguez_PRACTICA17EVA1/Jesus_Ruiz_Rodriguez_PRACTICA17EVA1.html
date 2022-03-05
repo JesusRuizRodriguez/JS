@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 17</title>
+</head>
+<body>
+    <script>
+    var permiso = true;
+    
+    //bucle de comprobacion de datos
+    do{
+        var numero = prompt("Introduzca un numero");
+        //al pulsar cancelar se mostrara un aviso de cancelacion
+        if(numero == null){
+            document.write("Cancelando Programa...");
+            break;
+        }
+        //al introducir un valor vacio o un espacio se mostrara un mensaje, de que se necesita un valor
+        if(numero == "" || numero == " "){
+            document.write("No se admiten datos vacios <br>");
+            permiso = false;
+
+        //se comprueba que se introduzca un numero mayor a 0
+        }else if(isNaN(numero) || numero <= 0){
+            document.write("Introduzca un numero mayor a 0 <br>");
+            permiso = false;
+        }
+        
+    }while(permiso == false)
+
+        //llamada a la funcion bucleFib
+        bucleFib(numero);
+
+        //funcion que hace fibonacci
+        function fibonacci(n){
+            //en caso de introducir un numero menor a 2 se mostrara simplemente el numero introducido ya que no se realizan operaciones
+           if(n < 2){
+               return n;
+            /*se obtiene el numero introducido y se vuelve a llamar a la funcion que repetira el proceso con la suma del numero anterior introducido
+              y el numero anterior +1 
+            */
+           }else{
+               return fibonacci(n-1)+fibonacci(n-2);
+           }
+        }
+        //bucle que ejecuta la funcion fibonacci
+        function bucleFib(n){
+            var resultado;
+            //el bucle se repetirá hasta el numero introducido y la ultima repeticion se guardará en la variable resultado
+            for(let i=0;i<=n;i++){
+                resultado = fibonacci(i);
+            }
+            //se muestra por linea de comandos el resultado final
+            console.log(resultado);
+        }
+
+        
+
+        
+
+
+    </script>
+</body>
+</html>

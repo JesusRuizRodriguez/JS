@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscaminas</title>
+</head>
+<body>
+    <script>
+        //creacion de la clase
+        function buscaMinas(filas, columnas, minas){ 
+            this.filas = filas;
+            this.columnas = columnas;
+            this.minas = minas;
+
+            //funcion dibujaTablero 
+            this.dibujaTablero = function(){
+                let tablero=[];
+                //doble bucle anidado para crear el array bidimensional del tablero que se ejecutará segun el numero de filas y columnas introducidos
+                for(let i =0;i<this.filas;i++){
+                    tablero[i]=[];
+                    for(let x =0; x<this.columnas;x++){
+                            
+                        tablero[i][x]=0;
+                    }
+                    
+                }
+                return tablero;
+                
+            }
+
+            //funcion insertaMinas que se le pasa el array bidimensional del tablero por parametro
+            this.insertaMinas = function(tablero){
+                let rf, rc;
+                
+                //bucle que inicia en 0 y se ejecutara el por el numero de minas que haya
+                for(let i =0;i<this.minas;i++){
+                    //se genera un numero aleatorio entre 0 y el numero de filas
+                    rf= Math.round(Math.random()*(this.filas-1));
+                    //se genera un numero aleatorio entre 0 y el numero de columnas
+                    rc= Math.round(Math.random()*(this.columnas-1));
+                    //en el caso de que haya una mina en esa posicion se genera nuevos numero aleatorios
+                    if(tablero[rf][rc] == "MINA"){
+                        rf= Math.round(Math.random()*(this.filas-1));
+                        rc= Math.round(Math.random()*(this.columnas-1));
+                        i--;
+                        continue;
+                    }else{
+                    //se asigna a la posicion aleatoria una mina    
+                        tablero[rf][rc] = "MINA";
+                    }
+                    
+                }
+
+                return tablero;
+            }
+
+            //funcion mostrarTablero
+            this.mostrarTablero = function(tablero){
+                //genera la tabla para enseñar el contenido del array bidimensional
+                //bucle igual que en la funcion dibujaTablero que dependera de las filas y columnas intro
+                document.write("<table border=1>");
+                for(let i =0;i<this.filas;i++){
+                    document.write("<tr>");
+                        
+                        for(let x =0; x<this.columnas;x++){
+                            document.write("<td>"+tablero[i][x]+"</td>");
+                            
+                        }
+                    document.write("</tr>");
+                }
+                document.write("</table>");
+            }
+            //funcion nMinaPos que recibe el tablero y la posicion de la fila y la columna
+            this.nMinasPos = function(tablero, fila, columna){
+                
+                let i,x,maxX,maxY;
+                //si la posicion de la fila -1 es menor a 0 se empieza el bucle en 0
+                if(fila-1 < 0){
+                    i =0;
+                //sino empezara en fila -1 
+                }else{
+                    i = fila-1;
+                }
+                //si la posicion de la columna -1 es menor a 0 se empieza el bucle en 0
+                if(columna-1 <0){
+                    x= 0;
+                //sino empezara en columna -1
+                }else{
+                    x= columna-1;
+                }
+                //si la columna +1 es mayor o igual al numero de columnas introducido se acabará el numero de columnas introducido
+                if(columna+1 >=this.columnas){
+                    maxX = this.columnas;
+                //sino se acabará en columna +1
+                }else{
+                    maxX = columna+1;
+                }
+                //si fila +1 es mayor a las filas intro se acabará en el numero de filas intro
+                if(fila+1 >= this.filas){
+                    maxY = this.filas;
+                //sino se acabará en fila +1
+                }else{
+                    maxY = fila+1;
+                }
+                
+                //bucle anidado que empezara y acabara segun la posicion que se lea en el tablero
+                for(i;i<=maxY;i++){
+                        
+                        for(x;x<=maxX;x++){
+                            //se muestra la posicion de la mina por cuadro de dialogo
+                            if(tablero[i][x] == "MINA"){
+                                console.log(i,x);
+                            }
+                        
+                        }
+                    //se vuelve hacer la comprobacion para resetear el valor de x y moverse entre las columnas 
+                    if(columna-1 <0){
+                            x= 0;
+                        }else{
+                            x= columna-1;
+                        }
+
+                }
+            }
+
+            //funcino minasCerca
+            this.minasCerca = function (tablero) {
+                
+                let x,y;
+                //bucle que recorre el tablero entero
+                for (let a = 0; a < this.filas; a++) {
+                    for (let s = 0; s < this.columnas; s++) {
+                        let count = 0;
+                        y=a;
+                        x=s;
+                        //bucle que recorre un 3x3 desde cada casilla
+                        //i empieza desde la posicion 0 o desde la posicion fila -1 en caso de que no sea menor a 0
+                        //el bucle se ejecutara por el numero de filas o el numero de filas +2 dependiendo de si se sale del rango de las filas introducidas
+                        for (let i = Math.max(0,y-1); i < Math.min(this.filas,y+2); i++) {
+                            //j empieza desde la posicion 0 o desde la posicion columna -1 en caso de que no sea menor a 0
+                            //el bucle se ejecutara por el numero de columnas o el numero de columnas +2 dependiendo de si se sale del rango de las columnas introducidas
+                            for (let j = Math.max(0,x-1); j < Math.min(this.columnas,x+2); j++) {
+                                if (tablero[i][j]=='MINA') {
+                                    //aumenta el contador al encontrar una mina alrededor
+                                    count++;
+                                }
+                            }
+                        }
+                        //si no tiene una mina la casilla se asigna el contador
+                        if (tablero[a][s]==false) {
+                            tablero[a][s]=count;
+                        }
+                    }
+                }
+
+                return tablero;
+            }
+
+            
+        }
+        
+        var permiso = true;
+        //bucle que se ejecuta mientras permiso sea false
+        do{
+                //creacion de variables
+                var filas = prompt("¿Cuantas filas desea?");
+                var columnas = prompt("¿Cuantas columnas desea?");
+                var minas = prompt("¿Cuantas minas desea?");
+                var fxc = filas * columnas;
+                
+                //si no se introduce un numero entre el 2 y el 20 se mostrara una aviso 
+                if(!this.filas.match(/^[2-9]$|^1[0-9]$|^20$/)){
+                    alert("Inserte algun numero del 2 al 20 para las filas");
+                    permiso = false;
+                //si no se introduce un numero entre el 2 y el 20 se mostrara una aviso 
+                }else if(!this.columnas.match(/^[2-9]$|^1[0-9]$|^20$/)){
+                    alert("Inserte algun numero del 2 al 20 para las columnas");
+                    permiso = false;
+                //si las minas es mayor o igual a las filas * columnas se muestra un aviso                    
+                }else if(this.minas >= fxc){
+                    alert("Inserte menos minas");
+                    permiso = false;
+                }else{
+                    permiso = true;
+                }
+            
+
+        }while(permiso == false)
+
+        //creacion del objeto buscaMinas con sus parametros y la llamadas de las funciones
+        var t1 = new buscaMinas(filas,columnas,minas);
+        var escenario = t1.dibujaTablero();
+        escenario = t1.insertaMinas(escenario);
+        escenario = t1.minasCerca(escenario);
+        t1.mostrarTablero(escenario);
+        
+        
+        
+
+        
+     
+        
+        
+
+            
+    </script>
+</body>
+</html>
